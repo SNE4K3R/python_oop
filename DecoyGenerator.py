@@ -1,67 +1,81 @@
-# fasta -> read() -> class xxx -> DecoyGenerator -> prot/rna seq -> decoysequene -> write() 
-
-# class FastaFile    
-    #identifier # label 
-    #Sequence
-    #DecoySequence
-    #read()  # biopython
-    #write() # biopython
-
-#class DecoyGenerator
-    #method reverse_protein_seq() - check internally if protein or RNA
-    #method reverse_rna_seq()
-    
-#class Sequence 
-   #method checkValid
-
-# class Protein_seq
-    #method checkValid
-        
-# RNA Sequence (modifications in the code -> can not do a reverse string)
-   #method checkValid
-    # prases everything within bracets as asingle unit
-
 # package reading fasta files (biopython)
 import os.path
 from Bio import SeqIO
  
-
 class Sequence: # base class
     def __init__(self,
-                 sequence=""):
-        self.sequence = sequence
+                 sequence):
+        if not (self.__checkValid(sequence)):
+            raise ValueError('This is not a valid sequece')
+        else:
+            self.__sequence = sequence
+
+    def getAsString(self):
+        return str(self.__sequence) # ensure copy is returned
+
+    # returns a reversed the subsequence from start to end (default implemtation)
+    @staticmethod
+    def reverseSequence(seq):
+        seq_string = seq.getAsString()
+        seq_length = len(seq_string)
+        return Sequence(seq_string[seq_length::-1])
+
+    def setFromString(sequence):
+        if not self.__checkValid(sequence):
+            raise ValueError('This is not a valid sequece')
+        self.__sequence = sequence
+        
+    def __getitem__(self, item): # needs to be subscriptable (like a list of characters)
+         return self.sequence[item]
 
     def __str__(self): # gives back string instead of class attribute
-        return "%s" %(self.sequence)
+        return "%s" %(self.getAsString())
+
+    def __len__(self): # overload of length function for the class
+        return len(self.sequence)
     
-    def checkValid():
-        pass
+    def __checkValid(self, sequence): # TODO: check if it is sequence 
+        return True
 
 class ProteinSequence(Sequence): # inheritance
-    def checkValid(): # overload
-        pass
+    # constructor must call base init
+    def __checkValid(self, sequence): # overload
+        # if only consists of AAs return true
+        return True
 
 class RNASequence(Sequence): # inheritance
-    def checkValid(): # overload
-        pass
+    # constructor must call base init
+    def __checkValid(self, sequence): # overload
+        # if only consists of NAs return tre
+        return True
+
+#class ModifiedRNASequence(Sequence): # inheritance
+    # constructor must call base init
+    def __checkValid(seq): # overload
+        # if only consists of NAs return tre  # now checks for [ ] also allowed
+        return seq
+
+    def reverseSequence(start, end):
+        pass # do something TODO
 
 class Entry:
     # parameterized constructor - additional add default value if nothing is passed
     def __init__(self, 
                  identifier="",
-                 sequence=Sequence(),
+                 sequence="",
                  decoy_sequence=""):
-        self.identifier = identifier
+        self.identifier = identifier # immer valide muss nicht gekapselt werden 
         self.sequence = Sequence(sequence)
-        self.decoy_sequence = decoy_sequence
+        self.decoy_sequence = decoy_sequence        
         
+        # works with all subclasses of Sequence
 class DecoyGenerator:
-    def reverseSequence():
-         # check which sequence? 
-        pass
+    @staticmethod
+    def reverseSequence(seq: Sequence):
+        rev_seq = Sequence.reverseSequence(seq)
+        return rev_seq
 
-class FastaFile:
-   
+class FastaFile: #Factory?
     @staticmethod
     def read(path):
         entries = [] # TODO:would you do it this way? 
@@ -69,7 +83,10 @@ class FastaFile:
         for seq_record in SeqIO.parse(path, extension):
             entry = Entry(identifier=seq_record.id)
             entry.identifier = seq_record.id
-            entry.sequence = Sequence(seq_record.seq)
+            # check if Protein #TODO
+            entry.sequence = ProteinSequence(seq_record.seq)
+            # check if RNA? #TODO
+            #entry.sequence = RNASequence(seq_record.seq)
             entries.append(entry)
         return entries
     
@@ -84,6 +101,10 @@ if __name__ == "__main__":
     entries = FastaFile.read(path)
         
     for elements in entries:
+        elements.decoy_sequence = DecoyGenerator.reverseSequence(elements.sequence)
+
         print(elements.identifier)
         print(type(elements.sequence))
         print(elements.sequence)
+        print(elements.decoy_sequence)
+        
