@@ -2,7 +2,7 @@
 import os.path
 from Bio import SeqIO
  
-class Sequence: # base class #TODO: Unfortunatley the __init__ of the superclass is not automatically used in the superclass
+class Sequence: # base class - Unfortunatley the __init__ of the superclass is not automatically used in the superclass
     def __init__(self, sequence):
         if not (self.__checkValid(sequence)):
             raise ValueError('This is not a valid sequece')
@@ -40,7 +40,7 @@ class ProteinSequence(Sequence): #inheritance
     def __init__(self, sequence):
         super(ProteinSequence, self).__init__(sequence)
         if not (self.__checkValid(sequence)):
-            raise ValueError("The squence " + sequence + " is not a valid Proteinsequence, please check your database")
+            raise ValueError("The sequence " + sequence + " is not a valid Proteinsequence, please check your database")
         else:
             self.__sequence = sequence
 
@@ -72,7 +72,7 @@ class RNASequence(Sequence): #inheritance
 #         # if only consists of NAs return tre  # now checks for [ ] also allowed
 #         return seq
 
-#     def reverseSequence(start, end):
+#     def reverseSequence(seq): # overload
 #         pass # do something
 
 class Entry:
