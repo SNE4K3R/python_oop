@@ -1,0 +1,3 @@
+1) Use the code from "code_chunks/1_3_basic_terms_methods" and add a retention time attribute, which allows to print mz, intensity and retention time to the command line. 
+
+2) Use the code you generated above (or use the code from "solution/solution_1.py") and encapsulate the member variables by making them private. 
