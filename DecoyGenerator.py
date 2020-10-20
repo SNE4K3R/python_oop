@@ -105,10 +105,7 @@ class DecoyGenerator:
         entry.decoy_description = DecoyGenerator.generateDecoyID(entry.description)
         entry.decoy_sequence = DecoyGenerator.reverseSequence(entry.sequence)
 
-# TODO: Difference between Protein / RNA sequence not general,
-# since this is checked internally.
 class FastaFile:
-
     # the fasta format standarization has a newline every 60 characters
     # for better readability.
     @staticmethod
@@ -147,10 +144,8 @@ class FastaFile:
 
 if __name__ == "__main__": 
     
-    #path_in = "/Users/alka/Documents/work/teaching/20SS/VK/python_oop/protein_small_test.fasta"
-    #path_in = "/mnt/e/debian_prog/vorkurs_python_oop/protein_small_test.fasta"
-    path_in = "/Users/alka/Documents/work/teaching/20SS/VK/python_oop/protein_rna.fasta"
-    path_out = "/Users/alka/Documents/work/teaching/20SS/VK/python_oop/decoydatabase.fasta"
+    path_in = "./databases/protein_rna.fasta"
+    path_out = "./decoy_db/decoydatabase.fasta"
     entries = FastaFile.read(path_in)
 
     for elements in entries:
