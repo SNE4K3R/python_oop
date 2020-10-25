@@ -5,7 +5,7 @@ from Bio import SeqIO
 class Sequence: # base class - Unfortunatley the __init__ of the superclass is not automatically used in the superclass
     def __init__(self, sequence):
         if not (self.__checkValid(sequence)):
-            raise ValueError('This is not a valid sequece')
+            raise ValueError('This is not a valid sequence')
         else:
             self.__sequence = sequence
 
@@ -14,7 +14,7 @@ class Sequence: # base class - Unfortunatley the __init__ of the superclass is n
 
     def setFromString(self, sequence):
         if not self.__checkValid(sequence):
-            raise ValueError('This is not a valid sequece')
+            raise ValueError('This is not a valid sequence')
         self.__sequence = sequence
         
     def __getitem__(self, item): # needs to be subscriptable (like a list of characters)
@@ -55,7 +55,7 @@ class RNASequence(Sequence): #inheritance
     def __init__(self, sequence):
         super(RNASequence, self).__init__(sequence)
         if not (self.__checkValid(sequence)):
-            raise ValueError("The squence " + sequence + " is not a valid RNA-Sequnce, please check your database")
+            raise ValueError("The squence " + sequence + " is not a valid RNA-Sequence, please check your database")
         else:
             self.__sequence = sequence
 
