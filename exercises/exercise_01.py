@@ -19,10 +19,10 @@ class MSPeak:
 
 
 if __name__ == "__main__":
-    # x = MSPeak(250, 60000) # using the __init__ method "constructor"
-    x = MSPeak()
-    x.show_peak()
-    x.mz = 250
-    x.intensity = 600000
-    x.rt = 500
+    x = MSPeak(250, 60000, 500) # using the __init__ method "constructor"
+    # x = MSPeak()
+    # x.show_peak()
+    # x.mz = 250
+    # x.intensity = 600000
+    # x.rt = 500
     x.show_peak()
