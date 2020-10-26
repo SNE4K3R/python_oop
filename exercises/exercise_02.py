@@ -13,11 +13,20 @@ class MSPeak:
     def set_mz(self, mz):
         self.__mz = mz
 
+    def get_mz(self):
+        return self.__mz
+
     def set_intensity(self, intensity):
         self.__intensity = intensity
 
+    def get_intensity(self):
+        return self.__intensity
+
     def set_rt(self, rt):
         self.__rt = rt
+
+    def get_rt(self):
+        return self.__rt
 
     def show_peak(self):
         if self.__mz and self.__intensity and self.__rt:
