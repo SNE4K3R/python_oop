@@ -12,7 +12,7 @@ class Dog(Pet):
     _class_info = "man's best friends" # overload
     
     #@staticmethod
-    #def about(): # overlad
+    #def about(): # overlad --> define same function in subclass (redefinition)
     #    print("This class is about " + Dog._class_info + "!") 
 
 class Cat(Pet):
